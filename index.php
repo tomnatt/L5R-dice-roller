@@ -8,7 +8,7 @@ require_once("l5r_dice_roller.php");
 $roll = 7;
 $keep = 4;
 
-$rolling = new rollD10($roll, $keep);
+$rolling = new l5r_dice_roller($roll, $keep);
 
 $rolling->roll();
 echo $rolling->result();
