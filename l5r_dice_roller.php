@@ -2,11 +2,27 @@
 
 class l5r_dice_roller {
     
-    protected $roll, $keep, $rounds, $rawResults, $results, $mostRolled, $highestRolled, $lowestRolled;
+    protected $roll, $keep, $rounds, $rawResults, $results, $mostRolled, $highestRolled, $lowestRolled, $canRoll;
     
-    public function __construct($roll, $keep, $rounds = 1000) {  
-        $this->roll = $roll;
-        $this->keep = $keep;
+    public function __construct($roll, $keep, $rounds = 1000) {
+    
+        // ensure we have sane input for roll and keep
+        if (preg_match('/^\d+$/', $roll) && $roll > 0) {  
+            $this->roll = $roll;
+        } else {
+            $this->roll = 0;
+        }
+        if (preg_match('/^\d+$/', $keep) && $keep > 0) {  
+            $this->keep = $keep;
+        } else {
+            $this->keep = 0;
+        }
+        
+        // remember you can't keep more than you roll!
+        if ($this->keep > $this->roll) {
+            $this->keep = $this->roll;
+        }
+        
         $this->rounds = $rounds;
         $this->rawResults = array();
         $this->results = array();
@@ -28,6 +44,7 @@ class l5r_dice_roller {
         for ($i = 0; $i < $this->roll; $i++) {
             $set[] = $this->rollSingleD10();
         }
+        
         // sort them
         rsort($set, SORT_NUMERIC);
         return $set;
