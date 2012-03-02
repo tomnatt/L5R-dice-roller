@@ -5,8 +5,16 @@ ini_set('display_errors', True);
 
 require_once("l5r_dice_roller.php");
 
-$roll = $_GET["roll"];
-$keep = $_GET["keep"];
+$roll = "";
+if (isset($_GET["roll"])) {
+    $roll = $_GET["roll"];
+}
+
+$keep = "";
+if (isset($_GET["keep"])) {
+    $keep = $_GET["keep"];
+}
+
 $emphasis = false;
 if (isset($_GET["emphasis"]) && $_GET["emphasis"] == "on") {
     $emphasis = true;
