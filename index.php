@@ -7,9 +7,17 @@ require_once("l5r_dice_roller.php");
 
 $roll = $_GET["roll"];
 $keep = $_GET["keep"];
+$emphasis = false;
+if (isset($_GET["emphasis"]) && $_GET["emphasis"] == "on") {
+    $emphasis = true;
+}
+$fixed = false;
+if (isset($_GET["fixed"]) && $_GET["fixed"] == "on") {
+    $fixed = true;
+}
 $rounds = 1000;
 
-$rolling = new l5r_dice_roller($roll, $keep, $rounds);
+$rolling = new l5r_dice_roller($roll, $keep, $emphasis, $rounds);
 $rolling->roll();
 
 ?>
@@ -40,23 +48,33 @@ $rolling->roll();
 <form action="." method="get">
     <label>
         Roll: 
-        <input type="text" name="roll" id="roll" />
+        <input type="text" name="roll" id="roll" value="<?php echo $roll; ?>" />
     </label>
     <label>
         Keep:
-        <input type="text" name="keep" id="keep" />
+        <input type="text" name="keep" id="keep" value="<?php echo $keep; ?>" />
+    </label>
+    <label>
+        Emphasis?
+        <input type="checkbox" name="emphasis" id="emphasis" <?php if ($emphasis) { ?>checked="checked"<?php } ?> />
+    </label>
+    <label>
+        Fix graph axis?
+        <input type="checkbox" name="fixed" id="fixed" <?php if ($fixed) { ?>checked="checked"<?php } ?> />
     </label>
     <input type="submit" value="Roll those dice!" />
 </form>
 
 
 <!-- results -->
-<p>Roll: <?php echo $roll;?>, keep: <?php echo $keep; ?> - any over 10 observe the ten dice rule</p>
-<p>Rolled <?php echo $rounds; ?> times</p>
+<h2>Results</h2>
 
 <div id="results" style="height:400px; width:800px;"></div>
 
 <p>Average result: <strong><?php echo $rolling->averageResult(); ?></strong></p>
+<p>Roll: <?php echo $roll;?>, keep: <?php echo $keep; ?> - any over 10 observe the ten dice rule</p>
+<?php if ($emphasis) { ?><p>Rerolled 1s (as per skill emphasis)</p><?php } ?>
+<p>Rolled <?php echo $rounds; ?> times</p>
 
 <script>
 $(document).ready(function () {
@@ -73,13 +91,13 @@ $(document).ready(function () {
         axes: {
             xaxis: {
                 label: "Dice result",
-                min: <?php echo $rolling->lowestRolled(); ?> - 5,
-                max: <?php echo $rolling->highestRolled(); ?> + 5,  
+                min: <?php echo ($fixed ? 0 : $rolling->lowestRolled() - 5); ?>,
+                max: <?php echo ($fixed ? 100 : $rolling->highestRolled() + 5); ?>,  
             },
             yaxis: {
                 label: "# rolled",
                 min: 0,
-                max: <?php echo $rolling->mostRolled(); ?> + 2
+                max: <?php echo ($fixed ? 120 : $rolling->mostRolled() + 2); ?>,
             }
         },
         cursor: {

@@ -2,9 +2,9 @@
 
 class l5r_dice_roller {
     
-    protected $roll, $keep, $modifier, $rounds, $rawResults, $results, $mostRolled, $highestRolled, $lowestRolled, $canRoll;
+    protected $roll, $keep, $modifier, $emphasis, $rounds, $rawResults, $results, $mostRolled, $highestRolled, $lowestRolled, $canRoll;
     
-    public function __construct($roll, $keep, $rounds = 1000) {
+    public function __construct($roll, $keep, $emphasis = false, $rounds = 1000) {
     
         // ensure we have sane input for roll and keep
         if (preg_match('/^\d+$/', $roll) && $roll > 0) {  
@@ -19,6 +19,7 @@ class l5r_dice_roller {
         }
         
         $this->modifier = 0;
+        $this->emphasis = $emphasis;
         $this->rounds = $rounds;
         $this->rawResults = array();
         $this->results = array();
@@ -50,6 +51,12 @@ class l5r_dice_roller {
     
     public function rollSingleD10() {
         $result = rand(1, 10);
+        
+        // if we have an emphasis, reroll 1s once
+        if ($this->emphasis && $result == 1) {
+            $result = rand(1, 10);
+        }
+        
         if ($result == 10) {
             $result = $result + $this->rollSingleD10();
         }
