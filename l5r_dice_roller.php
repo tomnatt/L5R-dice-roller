@@ -62,7 +62,7 @@ class l5r_dice_roller {
         }
         return $result;
     }
-  
+
     
     public function rollOneSet() {
 
@@ -88,7 +88,7 @@ class l5r_dice_roller {
         
         // add on the modifier
         $total = $total + $this->modifier;
-                 
+                
         return $total;
     }
     
@@ -104,7 +104,7 @@ class l5r_dice_roller {
         
         $this->lowestRolled = $this->rawResults[0];
         $this->highestRolled = $this->rawResults[count($this->rawResults) - 1];
-   
+
         // create multidimensional array of result => occurances, removing dupes
         $used = array();
         foreach ($this->rawResults as $r) {

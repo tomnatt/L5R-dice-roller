@@ -33,9 +33,12 @@ $rolling->roll();
 
 <html>
 <head>
-	<title>L5R Dice roller</title>
+    <title>L5R Dice roller</title>
+    <meta name="description" content="Roll dice and generate statistics for L5R system" />
+    <meta name="keywords" content="L5R, Legend of the Five Rings, dice roller, statistics" />
+    <meta name="author" content="Tom Natt" />
 
-  <!--[if lt IE 9]><script language="javascript" type="text/javascript" src="js/excanvas.js"></script><![endif]-->
+<!--[if lt IE 9]><script language="javascript" type="text/javascript" src="js/excanvas.js"></script><![endif]-->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
@@ -46,7 +49,7 @@ $rolling->roll();
     <script type="text/javascript" src="js/plugins/jqplot.highlighter.min.js"></script>
     <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />
     <link rel="stylesheet" type="text/css" href="css/dice.css" />
-   
+
 </head>
 <body>
 
@@ -88,12 +91,12 @@ $rolling->roll();
 $(document).ready(function () {
 
     $.jqplot.config.enablePlugins = true;
- 
+
     var s1 = $.parseJSON(<?php echo json_encode(json_encode($rolling->results())); ?>);
     
     //console.log(s1);
     //console.log($.isArray(s1));
- 
+
     // include a little space around the mix / max for a more pleasing graph
     plot1 = $.jqplot('results',[s1],{
         axes: {
@@ -112,14 +115,14 @@ $(document).ready(function () {
             show: true
         },
         seriesDefaults: {
-          rendererOptions: {
-              smooth: true
-          }
+        rendererOptions: {
+            smooth: true
+        }
         },
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
             tickOptions: {
-               formatString: '%d'
+            formatString: '%d'
             }
         }, 
     });
