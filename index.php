@@ -5,15 +5,16 @@ ini_set('display_errors', True);
 
 require_once("l5r_dice_roller.php");
 
-$roll = 7;
-$keep = 4;
+$roll = 4;
+$keep = 2;
+$rounds = 1000;
 
-$rolling = new l5r_dice_roller($roll, $keep, 10);
+$rolling = new l5r_dice_roller($roll, $keep, $rounds);
 
 $rolling->roll();
 
 //print_r($rolling->results());
-echo json_encode($rolling->results());
+//echo json_encode($rolling->results());
 
 ?>
 <!DOCTYPE html>
@@ -26,17 +27,18 @@ echo json_encode($rolling->results());
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/jquery.jqplot.min.js"></script>
-    <!--<script type="text/javascript" src="js/plugins/jqplot.dateAxisRenderer.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.barRenderer.min.js"></script>
-    <script type="text/javascript" src="js/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jqplot.canvasAxisLabelRenderer.min.js"></script>
+    <script type="text/javascript" src="js/plugins/jqplot.canvasTextRenderer.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.highlighter.min.js"></script>
-    <script type="text/javascript" src="js/plugins/jqplot.dragable.min.js"></script>
-    <script type="text/javascript" src="js/plugins/jqplot.trendline.min.js"></script>-->
     <link rel="stylesheet" type="text/css" hrf="css/jquery.jqplot.min.css" />
    
 </head>
 <body>
+
+<p>Roll: <?php echo $roll;?>, keep: <?php echo $keep; ?></p>
+<p>Rolled <?php echo $rounds; ?> times</p>
 
 <div id="results" style="height:400px; width:800px;"></div>
 
@@ -49,17 +51,16 @@ $(document).ready(function () {
  
     var s1 = $.parseJSON(<?php echo json_encode(json_encode($rolling->results())); ?>);
     
-    console.log(s1);
-    console.log($.isArray(s1));
+    //console.log(s1);
+    //console.log($.isArray(s1));
  
     // include a little space around the mix / max for a more pleasing graph
     plot1 = $.jqplot('results',[s1],{
-        title: 'Results',
         axes: {
             xaxis: {
-              min: <?php echo $rolling->lowestRolled(); ?> - 5,
-              max: <?php echo $rolling->highestRolled(); ?> + 5,  
-                
+                label: "Total rolled",
+                min: <?php echo $rolling->lowestRolled(); ?> - 5,
+                max: <?php echo $rolling->highestRolled(); ?> + 5,  
             },
             yaxis: {
                 min: 0,
@@ -68,7 +69,19 @@ $(document).ready(function () {
         },
         cursor: {
             show: true
-        }
+        },
+        seriesDefaults: {
+          rendererOptions: {
+              smooth: true
+          }
+        },
+        axesDefaults: {
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
+            useSeriesColor: true,
+            tickOptions: {
+               formatString: '%d'
+            }
+        }, 
     });
 });
 </script>

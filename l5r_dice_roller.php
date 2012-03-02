@@ -91,6 +91,10 @@ class l5r_dice_roller {
         return $this->results;        
     }
     
+    public function rawResults() {
+        return $this->rawResults;        
+    }
+    
     public function averageResult() {
         
         // take the average of all the result sets, round to nearest whole number
