@@ -2,7 +2,7 @@
 
 class l5r_dice_roller {
     
-    protected $roll, $keep, $rounds, $rawResults, $results, $mostRolled, $highestRolled, $lowestRolled, $canRoll;
+    protected $roll, $keep, $modifier, $rounds, $rawResults, $results, $mostRolled, $highestRolled, $lowestRolled, $canRoll;
     
     public function __construct($roll, $keep, $rounds = 1000) {
     
@@ -18,17 +18,37 @@ class l5r_dice_roller {
             $this->keep = 0;
         }
         
+        $this->modifier = 0;
+        $this->rounds = $rounds;
+        $this->rawResults = array();
+        $this->results = array();
+        
+        // l5r 4e p77
+        $this->tenDiceRule();
+        
         // remember you can't keep more than you roll!
         if ($this->keep > $this->roll) {
             $this->keep = $this->roll;
         }
-        
-        $this->rounds = $rounds;
-        $this->rawResults = array();
-        $this->results = array();
     }
     
-    function rollSingleD10() {
+    private function tenDiceRule() {
+    
+        // if $roll exceeds 10, add 1 kept dice for every 2 excess roll
+        if ($this->roll > 10) {
+            $this->keep = $this->keep + floor(($this->roll - 10) / 2);
+            $this->roll = 10;
+        }
+        
+        // if $keep exceeds 10 add 2 to the total for every excess keep
+        if ($this->keep > 10) {
+            $this->modifier = ($this->keep - 10) * 2;
+            $this->keep = 10;
+        }
+        
+    }
+    
+    public function rollSingleD10() {
         $result = rand(1, 10);
         if ($result == 10) {
             $result = $result + $this->rollSingleD10();
@@ -57,7 +77,11 @@ class l5r_dice_roller {
         $total = 0;
         for ($i = 0; $i < $this->keep; $i++) {
             $total = $total + $set[$i];
-        }         
+        }
+        
+        // add on the modifier
+        $total = $total + $this->modifier;
+                 
         return $total;
     }
     

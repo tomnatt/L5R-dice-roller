@@ -51,7 +51,7 @@ $rolling->roll();
 
 
 <!-- results -->
-<p>Roll: <?php echo $roll;?>, keep: <?php echo $keep; ?></p>
+<p>Roll: <?php echo $roll;?>, keep: <?php echo $keep; ?> - any over 10 observe the ten dice rule</p>
 <p>Rolled <?php echo $rounds; ?> times</p>
 
 <div id="results" style="height:400px; width:800px;"></div>
@@ -92,7 +92,6 @@ $(document).ready(function () {
         },
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
-            useSeriesColor: true,
             tickOptions: {
                formatString: '%d'
             }
