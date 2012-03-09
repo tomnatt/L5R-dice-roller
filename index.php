@@ -115,14 +115,14 @@ $(document).ready(function () {
             show: true
         },
         seriesDefaults: {
-        rendererOptions: {
-            smooth: true
-        }
+            rendererOptions: {
+                smooth: true
+            }
         },
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer,
             tickOptions: {
-            formatString: '%d'
+                formatString: '%d'
             }
         }, 
     });
