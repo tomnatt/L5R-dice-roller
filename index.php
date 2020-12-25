@@ -47,13 +47,16 @@ $rolling->roll();
     <script type="text/javascript" src="js/plugins/jqplot.canvasTextRenderer.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.highlighter.min.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="/css/tomnatt.css" title="Default" />
     <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />
     <link rel="stylesheet" type="text/css" href="css/dice.css" />
 
 </head>
 <body>
 
-<h1>L5R dice statistics generator</h1>
+<div class="content">
+
+<h3>L5R dice statistics generator</h3>
 
 <!-- form -->
 <form action="." method="get">
@@ -78,7 +81,7 @@ $rolling->roll();
 
 
 <!-- results -->
-<h2>Results</h2>
+<h4>Results</h4>
 
 <div id="results" style="height:400px; width:800px;"></div>
 
@@ -86,6 +89,8 @@ $rolling->roll();
 <p>Roll: <?php echo $roll;?>, keep: <?php echo $keep; ?> - any over 10 observe the ten dice rule</p>
 <?php if ($emphasis) { ?><p>Rerolled 1s (as per skill emphasis)</p><?php } ?>
 <p>Rolled <?php echo $rounds; ?> times</p>
+
+</div>
 
 <script>
 $(document).ready(function () {
