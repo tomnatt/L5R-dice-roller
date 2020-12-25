@@ -58,7 +58,7 @@ $rolling->roll();
 <!-- form -->
 <form action="." method="get">
     <label>
-        Roll: 
+        Roll:
         <input type="text" name="roll" id="roll" value="<?php echo $roll; ?>" />
     </label>
     <label>
@@ -93,7 +93,7 @@ $(document).ready(function () {
     $.jqplot.config.enablePlugins = true;
 
     var s1 = $.parseJSON(<?php echo json_encode(json_encode($rolling->results())); ?>);
-    
+
     //console.log(s1);
     //console.log($.isArray(s1));
 
@@ -103,7 +103,7 @@ $(document).ready(function () {
             xaxis: {
                 label: "Dice result",
                 min: <?php echo ($fixed ? 0 : $rolling->lowestRolled() - 5); ?>,
-                max: <?php echo ($fixed ? 100 : $rolling->highestRolled() + 5); ?>,  
+                max: <?php echo ($fixed ? 100 : $rolling->highestRolled() + 5); ?>,
             },
             yaxis: {
                 label: "# rolled",
@@ -124,7 +124,7 @@ $(document).ready(function () {
             tickOptions: {
                 formatString: '%d'
             }
-        }, 
+        },
     });
 });
 </script>
