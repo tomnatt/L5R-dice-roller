@@ -47,18 +47,21 @@ $rolling->roll();
     <script type="text/javascript" src="js/plugins/jqplot.canvasTextRenderer.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.cursor.min.js"></script>
     <script type="text/javascript" src="js/plugins/jqplot.highlighter.min.js"></script>
+    <link rel="stylesheet" media="screen" type="text/css" href="/css/tomnatt.css" title="Default" />
     <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.min.css" />
     <link rel="stylesheet" type="text/css" href="css/dice.css" />
 
 </head>
 <body>
 
-<h1>L5R dice statistics generator</h1>
+<div class="content">
+
+<h3>L5R dice statistics generator</h3>
 
 <!-- form -->
 <form action="." method="get">
     <label>
-        Roll: 
+        Roll:
         <input type="text" name="roll" id="roll" value="<?php echo $roll; ?>" />
     </label>
     <label>
@@ -78,7 +81,7 @@ $rolling->roll();
 
 
 <!-- results -->
-<h2>Results</h2>
+<h4>Results</h4>
 
 <div id="results" style="height:400px; width:800px;"></div>
 
@@ -87,13 +90,15 @@ $rolling->roll();
 <?php if ($emphasis) { ?><p>Rerolled 1s (as per skill emphasis)</p><?php } ?>
 <p>Rolled <?php echo $rounds; ?> times</p>
 
+</div>
+
 <script>
 $(document).ready(function () {
 
     $.jqplot.config.enablePlugins = true;
 
     var s1 = $.parseJSON(<?php echo json_encode(json_encode($rolling->results())); ?>);
-    
+
     //console.log(s1);
     //console.log($.isArray(s1));
 
@@ -103,7 +108,7 @@ $(document).ready(function () {
             xaxis: {
                 label: "Dice result",
                 min: <?php echo ($fixed ? 0 : $rolling->lowestRolled() - 5); ?>,
-                max: <?php echo ($fixed ? 100 : $rolling->highestRolled() + 5); ?>,  
+                max: <?php echo ($fixed ? 100 : $rolling->highestRolled() + 5); ?>,
             },
             yaxis: {
                 label: "# rolled",
@@ -124,7 +129,7 @@ $(document).ready(function () {
             tickOptions: {
                 formatString: '%d'
             }
-        }, 
+        },
     });
 });
 </script>

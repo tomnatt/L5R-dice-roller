@@ -1,3 +1,18 @@
-body {
-    font-family: sans-serif;
+h4 {
+  color: black;
+  font-family: 'Ribeye Marrow', cursive;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #383838;
+  font-family: 'Oldenburg', cursive;
+  font-size: 20px;
+}
+
+input, select {
+  color: #383838;
+  font-family: 'Oldenburg', cursive;
+  font-size: 20px;
 }
